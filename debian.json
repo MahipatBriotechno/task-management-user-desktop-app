@@ -1,0 +1,17 @@
+{
+    "name": "MyApp",
+    "productName": "MyApp",
+    "genericName": "MyApp",
+    "description": "Description of my app",
+    "version": "1.0.0",
+    "maintainer": "mahipat@gmail.com",
+    "homepage": "/",
+    "license": "MIT",
+   
+    "categories": [
+        "Utility"
+    ],
+    "directories": {
+        "output": "release"
+    }
+}
