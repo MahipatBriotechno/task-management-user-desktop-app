@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../../shared/Loader";
 import { SingleTask } from "../../../state-management/admin/task/action";
+import NoTask from "../../shared/NoTask";
 
 // interface TaskProps {
 //   tasks: any
@@ -20,7 +21,6 @@ interface MyComponentProps {
 }
 
 const PendingTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
-
   const dispatch: any = useDispatch();
   const [cardData, setCardData] = useState([
     {
@@ -100,10 +100,13 @@ const PendingTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
     (ActiveTask) => ActiveTask.id === selectId
   );
 
-  
-  const pendingTasks = tasks.filter(
-    (task: { status: string }) => task.status === "Pending"
-  );
+
+  const pendingTasks = tasks
+  ? tasks?.filter((task: { status: string }) => task.status === "Pending")
+  : tasks?.tasks?.filter(
+      (task: { status: string }) => task.status === "Pending"
+    );
+
 
   return (
     <>
@@ -114,7 +117,7 @@ const PendingTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
             <Loader />
           ) : (
             <div className="mt-10 grid grid-cols-3 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 pendingtask">
-              {pendingTasks &&
+              {pendingTasks?.length ? (
                 pendingTasks.map((card: any) => (
                   <div key={card._id}>
                     <CardComponent
@@ -130,7 +133,10 @@ const PendingTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
                       id={card.id}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <NoTask />
+              )}
             </div>
           )}
         </Container>

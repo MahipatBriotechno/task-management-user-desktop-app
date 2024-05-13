@@ -223,9 +223,17 @@ const ActiveTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
   // const singleData = tasks && tasks?.filter(
   //   (ActiveTask: any) => ActiveTask.id === selectId
   // );
-  const activeTasks =
-    tasks &&
-    tasks?.filter((task: { status: string }) => task.status === "Active");
+  console.log("tasks_____", tasks);
+  const activeTasks = tasks?.tasks?.length ? tasks?.tasks?.filter(
+        (task: { status: string }) => task.status === "Active"
+      ) : tasks?.filter(
+        (task: { status: string }) => task.status === "Active"
+      )
+  // const activeTasks = tasks
+  //   ? tasks?.filter((task: { status: string }) => task.status === "Active")
+  //   : tasks?.tasks?.filter(
+  //       (task: { status: string }) => task.status === "Active"
+  //     );
 
   useEffect(() => {
     if (selectId) {
@@ -258,20 +266,27 @@ const ActiveTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
 
   // Update Task
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [assignDate, setAssignDate] = useState("");
   const [empName, setEmpName] = useState("");
   const [empId, setEmpId] = useState("");
   const [status, setStatus] = useState("");
   const [submissionDate, setSubmissionDate] = useState("");
+  const [startTime, setStartTime] = useState("0:0:0");
+  const [endTime, setEndTime] = useState("");
+  const [totalTimeDuration, setTotalTimeDuration] = useState("");
   console.log("singleTask", singleTask);
 
   useEffect(() => {
     if (singleTask) {
-      setTitle(singleTask.title || "");
-      setEmpName(singleTask.empName || "");
-      setEmpId(singleTask.empId || "");
+      setTitle(singleTask?.title || "");
+      setEmpName(singleTask?.empName || "");
+      setEmpId(singleTask?.empId || "");
       setStatus("Completed");
-      setSubmissionDate(singleTask.submissionDate || "");
+      setAssignDate(singleTask?.assignDate || "");
+      setSubmissionDate(singleTask?.submissionDate || "");
+      setStartTime(singleTask?.startTime || "");
+      setEndTime(singleTask?.endTime || "");
+      setTotalTimeDuration(singleTask?.totalTimeDuration || "");
     }
   }, [singleTask]);
 
@@ -282,13 +297,25 @@ const ActiveTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
   ) => {
     dispatch(
       updateUserTask(
+        // selectUpdateId,
+        // date,
+        // title,
+        // empName,
+        // empId,
+        // status,
+        // submissionDate,
+
         selectUpdateId,
-        date,
         title,
-        empName,
         empId,
+        empName,
         status,
-        submissionDate
+        assignDate,
+        submissionDate,
+        startTime,
+        endTime,
+        totalTimeDuration,
+
       )
     );
     closeModalUpdate();

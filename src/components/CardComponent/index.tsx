@@ -2,9 +2,9 @@ import React from "react";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HrLine from "../shared/HrLine";
 import { CardProps } from "../../Interface/ICardProps";
-// import Timer from "../timer/index";
 
 import { useLocation } from "react-router-dom";
+import Timer from "../timer";
 import { EyeButton } from "../shared/Buttons";
 
 const CardComponent = ({
@@ -16,7 +16,7 @@ const CardComponent = ({
   onChangeCheckbox,
   onTimeUpdate,
   onEyeButtonClick,
-  taskId
+  taskId,
 }: CardProps) => {
   const getStatusColor = () => {
     switch (status) {
@@ -37,7 +37,7 @@ const CardComponent = ({
 
   const location = useLocation();
 
-  // console.log("location",location.search == )
+  console.log("location", location.search);
   return (
     <div className="w-full rounded overflow-hidden border border-gray-300 p-6 sm:p-3">
       <div className="flex justify-between items-center">
@@ -67,7 +67,13 @@ const CardComponent = ({
         >
           {status}
         </div>
-        {/* <Timer onTimeUpdate={onTimeUpdate} task={task} taskId={taskId ? taskId : ''} /> */}
+        {location.search == "?tab=active" && (
+          <Timer
+            onTimeUpdate={onTimeUpdate}
+            task={task}
+            taskId={taskId ? taskId : ""}
+          />
+        )}
       </div>
     </div>
   );

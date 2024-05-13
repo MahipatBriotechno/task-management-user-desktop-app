@@ -1,19 +1,42 @@
-appId: com.example.ElectronTailwindReactTemplate
+# Application metadata
+appId: com.example.myapp
+productName: MyApp
+copyright: "Copyright © 2024 My Company"
 
-publish:
-    provider: github
-    token: YOUR_GITHUB_TOKEN
-
+# Files to include in the build
 files:
-    [
-        "dist/**/*",
-        "build/**/*",
-        "node_modules/**/*",
-        "package.json",
-        "build/icon.*",
-    ]
+  - "dist/"
+  - "node_modules/"
+  - "package.json"
 
-directories:
-    buildResources: assets
+# Extra files to include in the build (optional)
+extraFiles:
+  - "resources/"
 
-icon: ./build/icon.ico
+# Compression level
+compression: maximum  # can be "store", "normal", or "maximum"
+
+# ASAR packaging
+asar: true  # Whether to use ASAR to package the app
+
+# Build targets
+win:
+  target: 
+    - nsis  # Installer target for Windows
+  icon: "assets/icons/icon.ico"  # Path to the icon for Windows
+
+mac:
+  target: 
+    - dmg  # Disk image target for macOS
+  icon: "assets/icons/icon.icns"  # Path to the icon for macOS
+
+linux:
+  target: 
+    - AppImage  # AppImage target for Linux
+  icon: "assets/icons/icon.png"  # Path to the icon for Linux
+
+# Optional configuration for NSIS installer (Windows)
+nsis:
+  oneClick: false  # If true, allows one-click installation
+  perMachine: false  # If false, installs per user
+  allowToChangeInstallationDirectory: true  # Allows changing the install directory

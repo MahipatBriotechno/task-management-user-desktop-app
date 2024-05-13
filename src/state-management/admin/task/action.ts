@@ -110,13 +110,18 @@ export const updateTask = (
 };
 
 export const updateUserTask = (
+
   taskid: string,
-  date: string,
   title: string,
-  empName: string,
   empId: string,
+  empName: string,
   status: string,
-  submissionDate: string
+  assignDate: string,
+  submissionDate: string,
+  startTime: string,
+  endTime: string,
+  totalTimeDuration: string
+  
 ) => {
   return async (dispatch: any) => {
     try {
@@ -130,11 +135,15 @@ export const updateUserTask = (
           },
           body: JSON.stringify({
             taskid,
-            date,
             title,
+            empId,
             empName,
             status,
+            assignDate,
             submissionDate,
+            startTime,
+            endTime,
+            totalTimeDuration,
           }),
         }
       );

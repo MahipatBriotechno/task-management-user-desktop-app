@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Loader from "../../shared/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { SingleTask } from "../../../state-management/admin/task/action";
+import NoTask from "../../shared/NoTask";
 
 interface MyComponentProps {
   tasks: any;
@@ -95,9 +96,12 @@ const CompleteTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
     (ActiveTask) => ActiveTask.id === selectId
   );
 
-  const completedTasks = tasks.filter(
-    (task: { status: string }) => task.status === "Completed"
-  );
+  const completedTasks = tasks
+    ? tasks?.filter((task: { status: string }) => task.status === "Completed")
+    : tasks?.tasks?.filter(
+        (task: { status: string }) => task.status === "Completed"
+      );
+
   console.log("completedTasks", completedTasks);
 
   return (
@@ -109,7 +113,7 @@ const CompleteTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
             <Loader />
           ) : (
             <div className="mt-10 grid grid-cols-3 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 ">
-              {completedTasks &&
+              {completedTasks?.length ? (
                 completedTasks.map((card: any) => (
                   <div key={card._id}>
                     <CardComponent
@@ -125,7 +129,10 @@ const CompleteTask: React.FC<MyComponentProps> = ({ tasks, loading }) => {
                       id={card.id}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <NoTask />
+              )}
             </div>
           )}
         </Container>
